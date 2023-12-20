@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import re
 from pathlib import Path
 import os
 import dj_database_url
@@ -60,7 +60,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = ['8000-mthabs-drfapitest-rmk573spd2.us2.codeanyapp.com','drfapites-ba22ea6b3cca.herokuapp.com']
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'),'8000-mthabs-drfapitest-rmk573spd2.us2.codeanyapp.com']
 
 
 # Application definition
@@ -102,13 +102,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-if 'CLIENT_ORIGIN' in os.environ:
-    CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
-    ]
-else:
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    extracted_url = re.match(r'^([^.]+)', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
+
     CORS_ALLOWED_ORIGIN_REGEXES = [
-        r"^https://3000-mthabs-mometest-rus5z60391\.us2\.codeanyapp\.com$",
+        rf"{extracted_url}.(eu|us)\d+\.codeanyapp\.com$",
     ]
 CORS_ALLOW_CREDENTIALS = True
 
