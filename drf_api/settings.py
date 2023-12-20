@@ -60,7 +60,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'),'8000-mthabs-drfapitest-rmk573spd2.us2.codeanyapp.com']
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'),'8000-mthabs-drfapitest-rmk573spd2.us2.codeanyapp.com', 'drfapites-ba22ea6b3cca.herokuapp.com']
 
 
 # Application definition
